@@ -4,27 +4,33 @@
 
 ### 1.クローンとビルド
 
-任意のディレクトリでリポジトリをクローンし、プロジェクトディレクトリに移動後、コンテナを起動します。
+任意のディレクトリでリポジトリをクローンし、プロジェクトディレクトリを作成してコンテナを起動します。
 
-#### 1. リポジトリをクローン、ディレクトリ名をプロジェクト名に変更
+#### 1. リポジトリをクローン
 
 ```bash
 git clone git@github.com:gomashio-no-omusubi/flea-market-app
 ```
 
-#### 2. 作成したディレクトリに移動
+#### 2.ディレクトリ名をプロジェクト名に変更
 
 ```bash
-cd flea-market-app
+mv flea-market-app confirmation-flea-market-app
 ```
 
-#### 3. DockerDesktopアプリを立ち上げコンテナのビルドと起動
+#### 3. 作成したディレクトリに移動
+
+```bash
+cd confirmation-flea-market-app
+```
+
+#### 4. DockerDesktopアプリを立ち上げコンテナのビルドと起動
 
 ```bash
 docker-compose up -d --build
 ```
 
-#### ※ コンテナが完全に起動するまで、スペックにより数十秒〜数分かかる場合があります。
+_※ コンテナが完全に起動するまで、スペックにより数十秒〜数分かかる場合があります。_
 
 ### 2. Laravel環境構築
 
@@ -48,7 +54,9 @@ composer install
 cp .env.example .env
 ```
 
-#### 4. .envファイルの11行目以降を以下のように修正
+#### 4. .envファイルの修正
+
+DB接続設定（11行目付近）が以下になっているか確認・修正してください。
 
 ```bash
 DB_CONNECTION=mysql
@@ -89,7 +97,6 @@ php artisan db:seed
 
 - **PHP** : 8.1.34
 - **Laravel** : 8.83.8
-- **jquery** :
 - **MySQL** : 8.0.26
 - **nginx** : 1.21.1
 
