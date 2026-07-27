@@ -1,0 +1,140 @@
+.item-show{
+    width: 100%;
+}
+
+.item-show__header{
+    padding-top: 30px;
+}
+
+.item-show__name{
+    margin-bottom: 0;
+}
+.item-show__brand{
+    margin-top: 0;
+    font-size: 14px
+}
+
+.item-show__price{
+    font-size: 24px;
+    margin: 0;
+}
+
+.item-show__price span {
+    font-size: 16px;
+    font-weight: normal;
+    vertical-align: middle;
+}
+
+.item-show__status{
+    display: flex;
+    text-align: center;
+    font-size: 14px;
+    padding: 5px 0;
+    gap: 10px;
+}
+
+.purchase-btn {
+    width: 100%
+}
+
+.item-detail__section{
+    padding: 5px 0;
+}
+
+.section-title{
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.item-description {
+    font-size: 14px;
+}
+
+.info-group{
+    display: flex;
+    font-size: 14px;
+    align-items: center;
+    padding: 10px 0;
+}
+
+.info-label{
+    font-weight: bold;
+    font-size: 14px;
+    width: 120px;
+}
+
+.category-tags,
+.info-value{
+    display: flex;
+    flex: 1;
+    gap: 10px;
+    font-size: 14px;
+}
+
+.tag {
+    background-color: #D3D3D3;
+    border-radius: 20px;
+    text-align: center;
+    padding: 0 14px;
+}
+
+.category-tags .tag:first-child {
+    margin-left: -14px;
+}
+
+.item-detail__comments{
+    border: solid red;
+}
+
+.section-title__comment{
+    color: #696969;
+    font-size: 18px;
+}
+.comment-post_btn {
+    width:100%;
+}
+
+.form-title{
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 0;
+}
+.form-textarea{
+    border-radius: 2px;
+    margin-bottom:20px;
+    padding: 5px;
+    width: 100%;
+    height: 120px;
+}
+
+.comment-body {
+    background-color: #D3D3D3;
+    border-radius: 2px;
+    width: 100%;
+    font-size: 14px;
+    padding: 10px 5px;
+}
+
+@media screen and (min-width:768px) {
+    .item-show__container {
+        display: flex;
+        gap: 120px;
+        align-items: flex-start;
+        width: 100%;
+        padding: 40px 80px;
+    }
+
+    .item-show__image-box,
+    .item-show__content {
+        flex: 1;
+        min-width: 0;
+    }
+
+    .item-show__image-box img {
+        width: 100%;
+        max-width: 500px;
+        height: auto;
+        display: block;
+        margin: 0 auto;
+    }
+}

@@ -1,0 +1,42 @@
+/* 1. タグを綺麗に横並びにし、画面端で自動的に折り返させる */
+.sell-form__tag-list {
+    display: flex;
+    flex-wrap: wrap;
+    /* 💡 画面幅に合わせて自動で2行目、3行目に折り返す設定 */
+    gap: 12px 10px;
+    /* 💡 縦の隙間12px、横の隙間10px（画像に合わせた絶妙な余白） */
+    margin-top: 15px;
+}
+
+/* 2. 実際のチェックボックス（⬜️）は邪魔なので画面から完全に消す */
+.sell-form__checkbox {
+    display: none;
+}
+
+/* 3. 通常時の丸型タグボタンの見た目（赤枠に赤文字） */
+.sell-form__tag-btn {
+    display: inline-block;
+    padding: 6px 16px;
+    /* 内側の上下左右の余白 */
+    border: 1px solid #FF5555;
+    /* 💡 画像と同じ、細い赤色の枠線 */
+    background-color: #ffffff;
+    /* 背景は白 */
+    color: #FF5555;
+    /* 💡 文字色は赤 */
+    border-radius: 20px;
+    /* 💡 カプセル型（丸角）にする設定 */
+    font-size: 14px;
+    cursor: pointer;
+    /* マウスを乗せたら指マークにする */
+    user-select: none;
+    /* 文字が青く選択されてしまうのを防ぐ */
+}
+
+/* ⭐️ 4. チェックが入った「瞬間」、その隣にあるlabelを「赤背景に白文字」に反転させる */
+.sell-form__checkbox:checked+.sell-form__tag-btn {
+    background-color: #FF5555;
+    /* 💡 背景を赤色でベタ塗り（画像の新着インテリアと同じ状態） */
+    color: #ffffff;
+    /* 💡 文字色をホワイトにする */
+}

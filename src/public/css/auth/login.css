@@ -1,0 +1,50 @@
+.login-form {
+    max-width: 400px;
+    margin: 60px auto;
+}
+
+.login-form__heading {
+    text-align: center;
+    font-size: 24px;
+    padding: 10px 0;
+    margin-bottom: 25px;
+}
+
+.login-form__group {
+    display: flex;
+    flex-direction: column;
+}
+
+.login-form__label {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.login-form__input {
+    min-height: 40px;
+    padding: 0 10px;
+}
+
+.login-form__btn {
+    width: 100%;
+}
+
+.login-form__login-item {
+    text-align: center;
+    padding: 15px;
+}
+
+.login-form__link {
+    color: #2084D3;
+    font-size: 14px;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.login-form__error-message {
+    color: red;
+    height: 20px;
+    font-size: 12px;
+    padding: 0 5px;
+    margin-top: 0;
+}

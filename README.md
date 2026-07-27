@@ -9,22 +9,16 @@
 #### 1. リポジトリをクローン
 
 ```bash
-git clone git@github.com:gomashio-no-omusubi/flea-market-app
+git clone git@github.com:gomashio-no-omusubi/flea-market-app.git
 ```
 
-#### 2.ディレクトリ名をプロジェクト名に変更
+#### 2. 作成したディレクトリに移動
 
 ```bash
-mv flea-market-app confirmation-flea-market-app
+cd flea-market-app
 ```
 
-#### 3. 作成したディレクトリに移動
-
-```bash
-cd confirmation-flea-market-app
-```
-
-#### 4. DockerDesktopアプリを立ち上げコンテナのビルドと起動
+#### 3. DockerDesktopアプリを立ち上げコンテナのビルドと起動
 
 ```bash
 docker-compose up -d --build
@@ -91,7 +85,17 @@ php artisan db:seed
 
 - **お問い合わせ画面** : http://localhost/
 - **ユーザー登録画面** : http://localhost/register
+- **ログイン画面** : http://localhost/login
 - **phpMyAdmin** : http://localhost:8080/
+
+### テスト用ログインアカウント
+
+`php artisan db:seed` 実行後、以下のユーザーでログインして動作確認が可能です。
+ログインすると、すでに出品済み・購入済みのデータが表示された状態で全機能を確認いただけます。
+
+- **メールアドレス**: `test@example.com`
+- **パスワード**: `password`
+- **確認ポイント**:ログイン後、商品購入画面にて登録済みの住所（東京都渋谷区...）が配送先として初期表示されます。また、住所変更機能により別の配送先を指定した場合の挙動もご確認いただけます。
 
 ## 使用技術(実行環境)
 
