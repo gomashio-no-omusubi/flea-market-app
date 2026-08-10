@@ -15,11 +15,11 @@ class CreateProfilesTable extends Migration
     {
         Schema::create('profiles', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->string('postcode');
+            $table->foreignId('user_id')->unique()->constrained()->onDelete('cascade');
+            $table->string('postcode', 8);
             $table->string('address');
             $table->string('building')->nullable();
-            $table->string('img_url')->nullable();
+            $table->string('img_url', 2048)->nullable();
             $table->timestamps();
         });
     }

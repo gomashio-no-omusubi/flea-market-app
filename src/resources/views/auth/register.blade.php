@@ -12,46 +12,38 @@
         <div class="register-form__inner">
             <form class="register-form__form" action="{{ route('register') }}" method="POST" novalidate>
                 @csrf
-                <!--ユーザー名-->
+                {{-- ユーザー名 --}}
                 <div class="register-form__group">
                     <label class="register-form__label" for="name">ユーザー名</label>
                     <input class="register-form__input" type="text" name="name" id="name" value="{{ old('name') }}">
-                    <p class="register-form__error-message">
-                        @error('name')
-                            {{ $message }}
-                        @enderror
-                    </p>
+                    @error('name')
+                        <p class="error-message">{{ $message }}</p>
+                    @enderror
                 </div>
-                <!--メールアドレス-->
+                {{-- メールアドレス --}}
                 <div class="register-form__group">
                     <label class="register-form__label" for="email">メールアドレス</label>
                     <input class="register-form__input" type="email" name="email" id="email" value="{{ old('email') }}">
-                    <p class="register-form__error-message">
-                        @error('email')
-                            {{ $message }}
-                        @enderror
-                    </p>
+                    @error('email')
+                        <p class="error-message">{{ $message }}</p>
+                    @enderror
                 </div>
-                <!--パスワード-->
+                {{-- パスワード --}}
                 <div class="register-form__group">
                     <label class="register-form__label" for="password">パスワード</label>
                     <input class="register-form__input" type="password" name="password" id="password">
-                    <p class="register-form__error-message">
-                        @error('password')
-                            {{ $message }}
-                        @enderror
-                    </p>
+                    @error('password')
+                        <p class="error-message">{{ $message }}</p>
+                    @enderror
                 </div>
-                <!--確認用パスワード-->
+                {{-- 確認用パスワード --}}
                 <div class="register-form__group">
                     <label class="register-form__label" for="password_confirmation">確認用パスワード</label>
                     <input class="register-form__input" type="password" name="password_confirmation"
                         id="password_confirmation">
-                    <p class="register-form__error-message">
-                        @error('password_confirmation')
-                            {{ $message }}
-                        @enderror
-                    </p>
+                    @error('password_confirmation')
+                        <p class="error-message">{{ $message }}</p>
+                    @enderror
                 </div>
                 <button class="register-form__btn btn" type="submit">登録する</button>
             </form>

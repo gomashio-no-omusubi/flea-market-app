@@ -3,7 +3,7 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use App\Models\Condition;
+use App\Models\User;
 
 
 class ItemFactory extends Factory
@@ -16,8 +16,8 @@ class ItemFactory extends Factory
     public function definition()
     {
         return [
-            'user_id' => 2,
-            'condition_id' => Condition::inRandomOrder()->first()->id,
+            'user_id' => User::factory(),
+            'condition_id' => 1,
             'name' => $this->faker->word(),
             'price' => $this->faker->numberBetween(500, 50000),
             'brand' => $this->faker->randomElement([

@@ -2,7 +2,7 @@
   width: 100%;
   max-width: 1540px;
   margin: 0 auto;
-  padding: 0 30px;
+  padding: 0 50px;
   box-sizing: border-box;
 }
 
@@ -38,14 +38,13 @@
   justify-content: space-between;
   align-items: center;
   text-align: center;
-  width: 100%;
+  flex-grow: 1;
   height: 60px;
-  padding: 20px 5px;
 }
 
 .header__search-form {
   flex-grow: 1;
-  margin: 0 40px;
+  margin: 0 60px;
 }
 
 .header__search-input{
@@ -54,14 +53,18 @@
   width: 100%;
   padding: 0 20px;
   font-size: 16px;
+  border: none;
 }
 
 .header__menu {
   display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
   height: 60px;
   align-items: center;
-  padding: 0 15px;
-  gap: 25px;
+  gap: 35px;
+  flex-shrink: 0;
 }
 
 .header_logout-btn {
@@ -71,6 +74,7 @@
   color: #fff;
   font-size: 16px;
   cursor: pointer;
+  font-family: inherit;
 }
 
 .header__link {
@@ -94,6 +98,7 @@
   display: block;
   text-align: center;
   padding: 8px 32px;
+  margin-top: 40px;
   border: none;
   border-radius: 3px;
   text-decoration: none;
@@ -104,3 +109,39 @@
   cursor: pointer;
 }
 
+.error-message {
+  color: red;
+  height: 20px;
+  font-size: 12px;
+  padding: 0 5px;
+  margin-top: 0;
+}
+
+@media screen and (max-width: 768px) {
+
+  .header__inner {
+    flex-direction: column;
+    height: auto;
+    padding: 15px 0;
+    gap: 15px;
+  }
+
+  .header_nav {
+    flex-direction: column;
+    height: auto;
+    width: 100%;
+    gap: 15px;
+  }
+
+  .header__search-form {
+    margin: 0;
+    width: 100%;
+  }
+
+  .header__menu {
+    height: auto;
+    gap: 20px;
+    width: 100%;
+    justify-content: center;
+  }
+}

@@ -1,0 +1,148 @@
+.purchase-show__form{
+    display:flex;
+    justify-content: space-between;
+    align-items: stretch;
+    gap: 80px;
+    margin: 60px 30px;
+}
+
+@media screen and (max-width: 1023px) {
+    .purchase-show__form {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 40px;
+    }
+}
+
+.purchase-main {
+    flex: 1;
+    min-width: 0;
+}
+
+.purchase-show__image-box {
+    float: left;
+    width: 150px;
+    margin-bottom: 40px;
+    margin-right: 40px;
+    flex-shrink: 0;
+}
+
+.purchase-show__image-box img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+}
+
+.purchase-show__content {
+    flex: 1;
+    min-width: 0;
+    padding-top: 0;
+}
+
+.purchase-show__name{
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    margin-top: 0;
+}
+
+.purchase-show__price {
+    font-size: 22px;
+    margin: 0;
+}
+
+.item-show__price .currency-symbol {
+    font-size: 16px;
+    margin-right: 2px;
+}
+
+.purchase-section {
+    clear: both;
+    width: 100%;
+    border-top: 2px solid #575656f4;
+    padding: 20px 0;
+    margin-bottom: 20px;
+}
+
+.purchase-section:last-child {
+    border-bottom: 2px solid #575656f4;
+}
+
+.purchase-section__select{
+    width: 250px;
+    padding: 8px 10px;
+    margin-top: 20px;
+    margin-left: 70px;
+    border: 1px solid #575656f4;
+    border-radius: 2px;
+    font-size: 14px;
+}
+
+.purchase-section__header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.purchase-section__title{
+    font-size: 14px;
+    font-weight: bold;
+    padding-left: 30px;
+    margin-top: 0;
+}
+
+.purchase-section__link{
+    font-size: 14px;
+    text-decoration: none;
+    color: #2084D3;
+    cursor: pointer;
+}
+
+.purchase-address{
+    margin-left: 70px;
+}
+
+.purchase-address p{
+    font-size: 14px;
+    font-weight: bold;
+
+}
+
+.purchase-sidebar{
+    width: 350px;
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+}
+
+.summary-table{
+    width: 100%;
+    border-collapse: collapse;
+    border: 2px solid #575656f4;
+}
+
+.summary-table tr {
+    border-bottom: 2px solid #575656f4;
+}
+
+.summary-table tr:last-child {
+    border-bottom: none;
+}
+
+.summary-table th,
+.summary-table td {
+    padding: 32px 24px;
+    font-size: 14px;
+    vertical-align: middle;
+    text-align: center;
+}
+
+.summary-table__total td,
+.summary-payment-display td {
+    font-size: 18px;
+}
+
+.summary-table th {
+    font-weight: normal;
+    white-space: nowrap;
+    width: 1%;
+}

@@ -1,5 +1,5 @@
 .address-form {
-    max-width: 400px;
+    max-width: 450px;
     margin: 60px auto;
 }
 
@@ -13,6 +13,7 @@
 .address-form__group {
     display: flex;
     flex-direction: column;
+    margin-bottom: 20px;
 }
 
 .address-form__label {

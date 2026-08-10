@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Item;
 use App\Models\Purchase;
-use App\Models\Address;
 use App\Http\Requests\PurchaseRequest;
 use App\Http\Requests\AddressRequest;
 
@@ -16,42 +15,36 @@ class PurchaseController extends Controller
         $item = Item::findOrFail($item_id);
         $user = auth()->user();
 
-        $temporaryAddress = Address::where([
-            'user_id' => $user->id,
-            'item_id' => $item_id
-        ])->first();
-
-        if ($temporaryAddress) {
-            $address = $temporaryAddress;
+        if (session()->has("changed_address_{$item_id}")) {
+            $address = (object) session("changed_address_{$item_id}");
         } else {
-            //Userモデルにある profile() というリレーション関数を引っ張たあとに、$user->profileが使用できる
             $user->load('profile');
-            //何かしらの原因でアクセスできなかった（未定義だった）場合、エラーにして画面を壊すのではなく、安全に null（空っぽ）という果にして $address に代入
             $address = $user->profile ?? null;
         }
 
-        return view('purchase.show', compact('item', 'user', 'address'));
+        $paymentMethod = session("selected_payment_{$item_id}", "");
+
+        return view('purchase.show', compact('item', 'user', 'address', 'paymentMethod'));
     }
 
     //商品購入（商品購入処理の実行）
     public function purchaseStore(PurchaseRequest $request, $item_id)
     {
+        // 追加：プルダウン変更時などの送信であれば、選択された値をセッションに保存する
+        if ($request->has('payment_method')) {
+            session(["selected_payment_{$item_id}" => $request->payment_method]);
+        }
+
         // 購入ボタンが押されていない（プルダウンの自動送信などの）場合、DB保存は絶対にせず、選んだ値を抱えたまま（withInput）画面をリロードする
         if ($request->input('submit_action') !== 'buy') {
             return back()->withInput();
         }
 
-        //ブレイド画面のformタグで['item_id' => $item->id]を記述しitem_idの取り出しを担っているので、$item = Item::findOrFail($item_id);は不要
         $user = auth()->user();
         $paymentMethod = $request->payment_method;
 
-        $temporaryAddress = Address::where([
-            'user_id' => $user->id,
-            'item_id' => $item_id
-        ])->first();
-
-        if ($temporaryAddress) {
-            $address = $temporaryAddress;
+        if (session()->has("changed_address_{$item_id}")) {
+            $address = (object) session("changed_address_{$item_id}");
         } else {
             $user->load('profile');
             $address = $user->profile ?? null;
@@ -60,11 +53,14 @@ class PurchaseController extends Controller
         Purchase::create([
             'user_id' => $user->id,
             'item_id' => $item_id,
+            'payment_method' => $paymentMethod,
             'shipping_postcode' => $address->postcode,
             'shipping_address'  => $address->address,
             'shipping_building' => $address->building,
-            'payment_method' => $paymentMethod,
         ]);
+
+        session()->forget("changed_address_{$item_id}");
+        session()->forget("selected_payment_{$item_id}");
 
         return redirect()->route('items.index');
     }
@@ -82,17 +78,13 @@ class PurchaseController extends Controller
     {
         $validated = $request->validated();
 
-        Address::updateOrCreate(
-            [
-                'user_id' => auth()->id(),
-                'item_id' => $item_id,
-            ],
-            [
+        session([
+            "changed_address_{$item_id}" => [
                 'postcode' => $validated['postcode'],
-                'address' => $validated['address'],
+                'address'  => $validated['address'],
                 'building' => $validated['building'] ?? null,
             ]
-        );
+        ]);
 
         return redirect()->route('purchase.show', ['item_id' => $item_id]);
     }

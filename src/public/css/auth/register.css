@@ -1,5 +1,5 @@
 .register-form {
-    max-width: 400px;
+    max-width: 450px;
     margin: 60px auto;
 }
 
@@ -13,6 +13,7 @@
 .register-form__group {
     display: flex;
     flex-direction: column;
+    margin-bottom: 20px;
 }
 
 .register-form__label {
@@ -39,12 +40,4 @@
     font-size: 14px;
     text-decoration: none;
     cursor: pointer;
-}
-
-.register-form__error-message {
-    color: red;
-    height: 20px;
-    font-size: 12px;
-    padding: 0 5px;
-    margin-top: 0;
 }

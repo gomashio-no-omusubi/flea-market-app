@@ -18,29 +18,8 @@
                     <img src="{{ asset('images/logo.png') }}" alt="COACHTECH">
                 </a>
 
-                @auth
-                    <nav class="header_nav">
-                        <form class="header__search-form"
-                            action="{{ route('items.index', ['tab' => request()->query('tab')]) }}" method="GET">
 
-                            <input type="text" name="keyword" value="{{ $keyword ?? '' }}" class="header__search-input"
-                                placeholder="なにかをお探しですか？">
-                        </form>
-
-                        <ul class="header__menu">
-                            <li>
-                                <form action="{{ route('logout') }}" method="post">
-                                    @csrf
-                                    <button type="submit" class="header_logout-btn">ログアウト</button>
-                                </form>
-                            </li>
-                            <li><a class="header__link" href="{{ route('mypage.index') }}">マイページ</a></li>
-                            <li><a class="header__sell-btn" href="{{ route('items.create') }}">出品</a></li>
-                        </ul>
-                    </nav>
-                @endauth
-
-                @guest
+                @if (!request()->routeIs('login', 'register', 'verification.notice'))
                     <nav class="header_nav">
                         <form class="header__search-form"
                             action="{{ route('items.index', ['tab' => request()->query('tab')]) }}" method="GET">
@@ -49,20 +28,32 @@
                         </form>
 
                         <ul class="header__menu">
-                            <li>
-                                <a class="header__link" href="{{ route('login') }}">ログイン</a>
-                            </li>
+                            @auth
+                                <li>
+                                    <form action="{{ route('logout') }}" method="post">
+                                        @csrf
+                                        <button type="submit" class="header_logout-btn">ログアウト</button>
+                                    </form>
+                                </li>
+                            @endauth
+
+                            @guest
+                                <li>
+                                    <a class="header__link" href="{{ route('login') }}">ログイン</a>
+                                </li>
+                            @endguest
+
                             <li><a class="header__link" href="{{ route('mypage.index') }}">マイページ</a></li>
                             <li><a class="header__sell-btn" href="{{ route('items.create') }}">出品</a></li>
                         </ul>
                     </nav>
-                @endguest
+                @endif
 
             </div>
         </div>
     </header>
 
-    <main class="l-container">
+    <main>
         @yield('content')
     </main>
 </body>

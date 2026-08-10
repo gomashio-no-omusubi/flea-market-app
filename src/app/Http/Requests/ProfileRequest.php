@@ -26,16 +26,9 @@ class ProfileRequest extends FormRequest
         return [
             'img_url' => ['nullable', 'image', 'mimes:jpeg,png', 'max:2048'],
             'name' => ['required', 'string', 'max:20'],
-            'postcode' => ['required', 'string', 'max:8', 'regex:/^[0-9]{3}-[0-9]{4}$/'],
+            'postcode' => ['required', 'string', 'size:8', 'regex:/^[0-9]{3}-[0-9]{4}$/'],
             'address' => ['required', 'string', 'max:255'],
             'building' => ['nullable', 'string', 'max:255'],
-        ];
-    }
-
-    public function messages()
-    {
-        return [
-            'postcode.regex' => '郵便番号はハイフンありの8文字で入力してください',
         ];
     }
 }

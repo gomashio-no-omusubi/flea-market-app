@@ -8,10 +8,9 @@
 
 @section('content')
     <div class="item-show">
-        <div class="item-show__container">
+        <div class="item-show__container l-container">
             {{-- 左側：商品画像エリア --}}
             <div class="item-show__image-box">
-                {{-- 画像がない場合の代替え画像や、storageからの取得を想定 --}}
                 <img src="{{ asset($item->img_url) }}" alt="{{ $item->name }}">
             </div>
 
@@ -67,7 +66,7 @@
                         <div class="category-tags">
                             @foreach($item->categories as $category)
                                 <span class="tag">
-
+                                    {{ $category->name }}
                                 </span>
                             @endforeach
                         </div>
@@ -85,10 +84,7 @@
                         @foreach($item->comments as $comment)
                             <div class="comment-item">
                                 <div class="comment-user">
-                                    <div class="use-icon">
-                                        {{-- ユーザーアイコン画像がある場合 --}}
-                                        {{-- <img src="{{ asset('storage/' . $comment->user->image_url) }}" alt=""> --}}
-                                    </div>
+                                    <div class="user-icon">{{-- CSSで丸型にするためのダミーアイコン --}}</div>
                                     <span class="user-name">{{ $comment->user->name }}</span>
                                 </div>
                                 <div class="comment-body">
@@ -106,12 +102,11 @@
                                 <label for="content">商品へのコメント</label>
                             </h3>
                             <textarea class="form-textarea" name="content" id="content">{{ old('content') }}</textarea>
-
                         </div>
-
                         @error('content')
-                            <div class="error-message">{{ $message }}</div>
+                            <p class="error-message">{{ $message }}</p>
                         @enderror
+
                         <button class="comment-post_btn btn" type="submit">コメントを送信する</button>
                     </form>
                 </section>

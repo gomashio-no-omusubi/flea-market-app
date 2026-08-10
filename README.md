@@ -106,4 +106,97 @@ php artisan db:seed
 
 ## ER図
 
+## ER図
+
+```mermaid
+erDiagram
+    %% --------------------------------------------------
+    %% テーブル同士の繋がり
+    %% --------------------------------------------------
+    users ||--o| profiles : ""
+    users ||--o{ items : ""
+    users ||--o{ addresses : ""
+    users ||--o{ favorites : ""
+    users ||--o{ purchases : ""
+    users ||--o{ comments : ""
+    conditions ||--o{ items : ""
+    categories ||--o{ category_item : ""
+    items ||--o{ category_item : ""
+
+    %% --------------------------------------------------
+    %% テーブル定義（文法エラーを完全に修正）
+    %% --------------------------------------------------
+    users {
+        id id PK
+    }
+
+    profiles {
+        id id PK
+        user_id foreign_id "FK, UK"
+        postcode string
+        address string
+        building string_nullable
+        img_url string_nullable
+    }
+
+    categories {
+        id id PK
+        name string
+    }
+
+    conditions {
+        id id PK
+        name string
+    }
+
+    items {
+        id id PK
+        user_id foreign_id FK
+        condition_id foreign_id FK
+        name string
+        price integer
+        brand string_nullable
+        description text
+        img_url string
+    }
+
+    category_item {
+        id id PK
+        category_id foreign_id FK
+        item_id foreign_id FK
+    }
+
+    addresses {
+        id id PK
+        user_id foreign_id FK
+        item_id foreign_id FK
+        postcode string
+        address string
+        building string_nullable
+    }
+
+    favorites {
+        id id PK
+        user_id foreign_id FK
+        item_id foreign_id FK
+    }
+
+    purchases {
+        id id PK
+        user_id foreign_id FK
+        item_id foreign_id "FK, UK"
+        payment_method string
+        shipping_postcode string
+        shipping_address string
+        shipping_building string_nullable
+    }
+
+    comments {
+        id id PK
+        user_id foreign_id FK
+        item_id foreign_id FK
+        content text
+    }
+```
+
 ![ER図](./diagram.png)

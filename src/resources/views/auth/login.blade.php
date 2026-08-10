@@ -12,25 +12,21 @@
         <div class="login-form__inner">
             <form class="login-form__form" action="{{ route('login') }}" method="POST" novalidate>
                 @csrf
-                <!--メールアドレス-->
+                {{-- メールアドレス --}}
                 <div class="login-form__group">
                     <label class="login-form__label" for="email">メールアドレス</label>
                     <input class="login-form__input" type="text" name="email" id="email" value="{{ old('email') }}">
-                    <p class="login-form__error-message">
-                        @error('email')
-                            {{ $message }}
-                        @enderror
-                    </p>
+                    @error('email')
+                        <p class="error-message">{{ $message }}</p>
+                    @enderror
                 </div>
-                <!--パスワード-->
+                {{-- パスワード --}}
                 <div class="login-form__group">
                     <label class="login-form__label" for="password">パスワード</label>
                     <input class="login-form__input" type="password" name="password" id="password">
-                    <p class="login-form__error-message">
-                        @error('password')
-                            {{ $message }}
-                        @enderror
-                    </p>
+                    @error('password')
+                        <p class="error-message">{{ $message }}</p>
+                    @enderror
                 </div>
 
                 <button class="login-form__btn btn" type="submit">ログインする</button>

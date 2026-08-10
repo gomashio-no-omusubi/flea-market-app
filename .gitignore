@@ -14,3 +14,6 @@
 /src/.idea
 /src/.vscode
 /docker/mysql/data
+
+/src/storage/app/public/*
+!/src/storage/app/public/.gitignore

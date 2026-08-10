@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\ExhibitionRequest;
 use App\Models\Item;
 use App\Models\Category;
 use App\Models\Condition;
@@ -78,7 +79,7 @@ class ItemController extends Controller
     }
 
     //商品出品（商品出品処理の実行）
-    public function store(Request $request)
+    public function store(ExhibitionRequest $request)
     {
         // 2. 画像のアップロード処理
         if ($request->hasFile('img_url')) {
@@ -99,7 +100,7 @@ class ItemController extends Controller
             'price'        => $request->input('price'),
             'brand'        => $request->input('brand'),
             'description'  => $request->input('description'),
-            'img_url'      => $imagePath, // 👈 'images/dummy.png' から $imagePath に変更！
+            'img_url'      => $imagePath,
             'condition_id' => $request->input('condition_id'),
             'user_id'      => auth()->id(),
         ]);

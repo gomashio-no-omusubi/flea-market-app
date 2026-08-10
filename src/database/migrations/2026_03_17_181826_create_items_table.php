@@ -21,7 +21,7 @@ class CreateItemsTable extends Migration
             $table->integer('price');
             $table->string('brand')->nullable();
             $table->text('description');
-            $table->string('img_url');
+            $table->string('img_url', 2048);
             $table->timestamps();
         });
     }

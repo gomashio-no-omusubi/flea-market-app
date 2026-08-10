@@ -31,7 +31,7 @@ class CommentRequest extends FormRequest
     public function attributes()
     {
         return [
-            'content' => '商品へのコメント',
+            'content' => '商品コメント',
         ];
     }
 }

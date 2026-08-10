@@ -20,7 +20,7 @@ Route::get('/item/{item_id}', [ItemController::class, 'show'])->name('items.show
 // ==========================================
 // ログインユーザー限定ルート（要認証）
 // ==========================================
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth', 'verified'])->group(function () {
 
     //商品出品
     Route::get('/sell', [ItemController::class, 'create'])->name('items.create');
@@ -39,13 +39,15 @@ Route::middleware(['auth'])->group(function () {
     //マイリスト
     Route::post('/item/{item_id}/favorites', [FavoriteController::class, 'toggle'])->name('favorites.toggle');
 
-    Route::prefix('mypage')->name('mypage.')->group(function () {
-        //プロフィール画面
-        Route::get('/', [ProfileController::class, 'index'])->name('index');
+    Route::prefix('mypage')
+        ->name('mypage.')->group(function () {
 
-        //プロフィール初回設定・編集画面（表示と保存を共通化）
-        Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-        Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update'); //2回目以降の更新用
-        Route::post('/profile', [ProfileController::class, 'store'])->name('profile.store'); //初回保存用
-    });
+            //プロフィール画面
+            Route::get('/', [ProfileController::class, 'index'])->name('index');
+
+            //プロフィール初回設定・編集画面（表示と保存を共通化）
+            Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+            Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update'); //2回目以降の更新用
+            Route::post('/profile', [ProfileController::class, 'store'])->name('profile.store'); //初回保存用
+        });
 });

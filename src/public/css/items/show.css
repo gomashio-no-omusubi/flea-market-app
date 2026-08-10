@@ -1,140 +1,200 @@
 .item-show{
-    width: 100%;
+    padding: 60px 0;
 }
 
-.item-show__header{
-    padding-top: 30px;
+.item-show__container{
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 80px;
+}
+
+.item-show__image-box{
+    margin-top: 45px;
+    width: 50%;
+    max-width: 550px;
+    aspect-ratio: 1/1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.item-show__image-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.item-show__content{
+    flex-grow: 1;
+    max-width: 550px;
 }
 
 .item-show__name{
+    font-size: 32px;
+    font-weight: bold;
     margin-bottom: 0;
 }
+
 .item-show__brand{
     margin-top: 0;
     font-size: 14px
 }
 
 .item-show__price{
-    font-size: 24px;
-    margin: 0;
+    font-size: 32px;
+    margin: 0 0 15px;
+    display: flex;
+    align-items: baseline;
 }
 
-.item-show__price span {
-    font-size: 16px;
-    font-weight: normal;
-    vertical-align: middle;
+.item-show__price .currency-symbol {
+    font-size: 24px;
+    margin-right: 2px;
+}
+
+.item-show__price .tax-label {
+    font-size: 22px;
+    margin-left: 8px;
 }
 
 .item-show__status{
     display: flex;
-    text-align: center;
+    gap: 40px;
+    margin-bottom: 14px;
+    padding-left: 30px;
+}
+
+.status-item{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     font-size: 14px;
-    padding: 5px 0;
-    gap: 10px;
+}
+
+.icon-btn{
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+}
+
+.status-icon {
+    width: 35px;
+    height: 35px;
+    object-fit: contain;
+}
+
+.status-count {
+    margin-top: 4px;
+    font-weight: 500;
 }
 
 .purchase-btn {
     width: 100%
 }
 
+.item-show__section,
+.item-show__comments {
+    margin-bottom: 40px;
+}
+
+.section-title,
+.section-title__comment {
+    font-size: 24px;
+    font-weight: bold;
+    padding-bottom: 8px;
+    margin: 20px 0 20px 0;
+}
+
+.item-description p {
+    font-size: 15px;
+}
+
 .item-detail__section{
     padding: 5px 0;
 }
 
-.section-title{
-    font-size: 18px;
-    font-weight: bold;
-}
-
-.item-description {
-    font-size: 14px;
-}
-
-.info-group{
+.info-group {
     display: flex;
     font-size: 14px;
     align-items: center;
     padding: 10px 0;
 }
 
-.info-label{
-    font-weight: bold;
-    font-size: 14px;
+.info-label {
     width: 120px;
+    font-size: 16px;
+    font-weight: bold;
+    flex-shrink: 0;
 }
 
-.category-tags,
-.info-value{
+.category-tags {
     display: flex;
-    flex: 1;
+    flex-wrap: wrap;
     gap: 10px;
-    font-size: 14px;
 }
 
 .tag {
     background-color: #D3D3D3;
     border-radius: 20px;
-    text-align: center;
-    padding: 0 14px;
+    padding: 4px 14px;
+    font-size: 15px;
 }
 
-.category-tags .tag:first-child {
-    margin-left: -14px;
+.info-value {
+    font-size: 15px;
 }
 
-.item-detail__comments{
-    border: solid red;
+.comment-item {
+    margin-bottom: 24px;
 }
 
-.section-title__comment{
-    color: #696969;
+.comment-user {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+.user-icon {
+    background-color: #ccc;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+}
+
+.user-name,
+.form-title label{
     font-size: 18px;
-}
-.comment-post_btn {
-    width:100%;
+    font-weight: bold;
 }
 
 .form-title{
-    font-size: 16px;
-    font-weight: bold;
-    margin-bottom: 0;
-}
-.form-textarea{
-    border-radius: 2px;
-    margin-bottom:20px;
-    padding: 5px;
-    width: 100%;
-    height: 120px;
+    margin-bottom: 2px;
 }
 
 .comment-body {
     background-color: #D3D3D3;
     border-radius: 2px;
-    width: 100%;
+    min-width: 60%;
+    max-width: 100%;
     font-size: 14px;
-    padding: 10px 5px;
+    padding: 14px 10px;
+    box-sizing: border-box;
 }
 
-@media screen and (min-width:768px) {
-    .item-show__container {
-        display: flex;
-        gap: 120px;
-        align-items: flex-start;
-        width: 100%;
-        padding: 40px 80px;
-    }
+.form-textarea{
+    border-radius: 2px;
+    padding: 8px 10px;
+    width: 100%;
+    height: 120px;
+    box-sizing: border-box;
+}
 
-    .item-show__image-box,
-    .item-show__content {
-        flex: 1;
-        min-width: 0;
-    }
-
-    .item-show__image-box img {
-        width: 100%;
-        max-width: 500px;
-        height: auto;
-        display: block;
-        margin: 0 auto;
-    }
+.comment-post_btn {
+    width: 100%;
 }

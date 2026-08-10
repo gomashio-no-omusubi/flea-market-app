@@ -1,5 +1,5 @@
 .edit-form {
-    max-width: 400px;
+    max-width: 450px;
     margin: 60px auto;
 }
 
@@ -13,6 +13,7 @@
 .edit-form__group {
     display: flex;
     flex-direction: column;
+    margin-bottom: 20px;
 }
 
 .edit-form__label {
@@ -29,7 +30,6 @@
     width: 100%;
 }
 
-/* --- profile-image.css（共通：見た目・ボタンのデザイン） --- */
 .profile-image {
     display: flex;
     align-items: center;
@@ -43,6 +43,7 @@
     border-radius: 50%;
     background-color: #eee;
     overflow: hidden;
+    flex-shrink: 0;
 }
 
 .profile-image__preview img {
@@ -58,17 +59,9 @@
 .profile-image__label {
     display: inline-block;
     padding: 5px 16px;
-    border: 2px solid #ff4d4f;
+    border: 2px solid #FF5555;
     border-radius: 6px;
     font-weight: bold;
-    color: #ff4d4f;
+    color: #FF5555;
     cursor: pointer;
-}
-
-.edit-form__error-message {
-    color: red;
-    height: 20px;
-    font-size: 12px;
-    padding: 0 5px;
-    margin-top: 0;
 }

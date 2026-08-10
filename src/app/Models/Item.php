@@ -17,7 +17,6 @@ class Item extends Model
         'brand',
         'description',
         'img_url',
-        'condition_id',
     ];
 
     public function user()
@@ -30,10 +29,6 @@ class Item extends Model
         return $this->belongsTo(Condition::class);
     }
 
-    public function address()
-    {
-        return $this->hasOne(Address::class);
-    }
     public function purchase()
     {
         return $this->hasOne(Purchase::class);

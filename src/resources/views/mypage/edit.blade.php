@@ -21,7 +21,7 @@
                     @method('PUT')
                 @endif
 
-                <!--プロフィール画像-->
+                {{-- プロフィール画像 --}}
                 <div class="edit-form__group">
                     <div class="profile-image">
                         <div class="profile-image__preview {{ $profile && $profile->img_url ? '' : 'is-empty' }}">
@@ -40,52 +40,41 @@
                     </div>
                 </div>
 
-                <!--ユーザー名-->
+                {{-- ユーザー名 --}}
                 <div class="edit-form__group">
                     <label class="edit-form__label" for="name">ユーザー名</label>
                     <input class="edit-form__input" type="text" name="name" id="name"
                         value="{{ old('name', $user->name) }}">
-                    <p class="edit-form__error-message">
-                        @error('name')
-                            {{ $message }}
-                        @enderror
-                    </p>
+                    @error('name')
+                        <p class="error-message">{{ $message }}</p>
+                    @enderror
                 </div>
 
-                <!--郵便番号-->
+                {{-- 郵便番号 --}}
                 <div class="edit-form__group">
                     <label class="edit-form__label" for="postcode">郵便番号</label>
                     <input class="edit-form__input" type="text" name="postcode" id="postcode"
                         value="{{ old('postcode', $user->profile->postcode ?? '') }}">
-                    <p class="edit-form__error-message">
-                        @error('postcode')
-                            {{ $message }}
-                        @enderror
-                    </p>
+                    @error('postcode')
+                        <p class="error-message">{{ $message }}</p>
+                    @enderror
                 </div>
 
-                <!--住所-->
+                {{-- 住所 --}}
                 <div class="edit-form__group">
                     <label class="edit-form__label" for="address">住所</label>
                     <input class="edit-form__input" type="text" name="address" id="address"
                         value="{{ old('address', $user->profile->address ?? '') }}">
-                    <p class="edit-form__error-message">
-                        @error('address')
-                            {{ $message }}
-                        @enderror
-                    </p>
+                    @error('address')
+                        <p class="error-message">{{ $message }}</p>
+                    @enderror
                 </div>
 
-                <!--建物名-->
+                {{-- 建物名 --}}
                 <div class="edit-form__group">
                     <label class="edit-form__label" for="building">建物名</label>
                     <input class="edit-form__input" type="text" name="building" id="building"
                         value="{{ old('building', $user->profile->building ?? '') }}">
-                    <p class="edit-form__error-message">
-                        @error('building')
-                            {{ $message }}
-                        @enderror
-                    </p>
                 </div>
 
                 <button class="edit-form__btn btn" type="submit">更新する</button>
