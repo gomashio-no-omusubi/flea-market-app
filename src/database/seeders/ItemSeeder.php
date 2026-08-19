@@ -139,14 +139,12 @@ class ItemSeeder extends Seeder
             ],
         ];
 
-        //Itemファイルなので一度categoriesカラムを避難させ消去する
         foreach ($items as $data) {
             $categoryNames = $data['categories'];
             unset($data['categories']);
-            //取り出した後に$itemを作成
+
             $item = Item::create($data);
 
-            //先ほど避難させたcategoriesの中身をcategoryファイルにあるnameカラムと結びつける
             $categoryIds = Category::whereIn('name', $categoryNames)->pluck('id');
             $item->categories()->attach($categoryIds);
         }

@@ -16,18 +16,15 @@ class FavoriteSeeder extends Seeder
      */
     public function run()
     {
-        //ログイン後すぐにリアルなアプリにするため、テストユーザー（ID:1）を呼び出し、商品（ID:1）にいいねをさせておく
         $testUser = User::find(1);
 
         if ($testUser) {
             $testUser->favoriteItems()->syncWithoutDetaching([1]);
         }
 
-        //ユーザーID：3以降の人たちでダミーデータを作成（ID:1は上記の内容で固定、ID:2は出品者のため）
         $items = Item::all();
         $users = User::where('id', '>=', 3)->get();
 
-        //上記でall()したアイテムを取り出し、ランダムユーザー2～5人分のいいねをつける※itemがないといいねを付けられないため、先に$itemsをバラす
         foreach ($items as $item) {
             $count = min($users->count(), rand(2, 5));
             $randomUsers = $users->random($count);
