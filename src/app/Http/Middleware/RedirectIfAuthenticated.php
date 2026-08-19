@@ -23,6 +23,7 @@ class RedirectIfAuthenticated
 
         foreach ($guards as $guard) {
             if (Auth::guard($guard)->check()) {
+                // 🌟 余計な条件分岐をすべて消し、最初の1行だけに戻します！
                 return redirect(RouteServiceProvider::HOME);
             }
         }

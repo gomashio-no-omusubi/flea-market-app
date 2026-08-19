@@ -14,12 +14,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        Storage::disk('public')->deleteDirectory('profile');
-        Storage::disk('public')->deleteDirectory('items');
-
-        Storage::disk('public')->makeDirectory('profile');
-        Storage::disk('public')->makeDirectory('items');
-
         $this->call([
             UserSeeder::class,
             CategorySeeder::class,

@@ -23,16 +23,16 @@ class ItemIndexTest extends TestCase
     {
         $this->seed(ConditionSeeder::class);
 
-        $user = User::factory()->create();
+        $seller = User::factory()->create();
         $condition = Condition::first();
 
         $item1 = Item::factory()->create([
-            'user_id' => $user->id,
+            'user_id' => $seller->id,
             'condition_id' => $condition->id,
             'name' => 'テスト商品A',
         ]);
         $item2 = Item::factory()->create([
-            'user_id' => $user->id,
+            'user_id' => $seller->id,
             'condition_id' => $condition->id,
             'name' => 'テスト商品B',
         ]);
@@ -51,8 +51,11 @@ class ItemIndexTest extends TestCase
     {
         $this->seed(ConditionSeeder::class);
 
+        $seller = User::factory()->create();
         $condition = Condition::first();
+
         $soldItem = Item::factory()->create([
+            'user_id' => $seller->id,
             'condition_id' => $condition->id,
             'name' => '売り切れ商品',
         ]);

@@ -30,8 +30,15 @@ class PurchaseRequest extends FormRequest
 
         return [
             'payment_method' => ['required', 'string'],
-            'delivery_destination' => ['required'],
+            'address' => ['required'],
 
+        ];
+    }
+
+    public function attributes()
+    {
+        return [
+            'address' => '配送先',
         ];
     }
 }

@@ -23,15 +23,20 @@ class ItemSearchTest extends TestCase
         $this->seed(ConditionSeeder::class);
         $condition = Condition::first();
 
+        $seller = User::factory()->create();
+
         $matchedItem1 = Item::factory()->create([
+            'user_id' => $seller->id,
             'name' => '腕時計メンズ高級',
             'condition_id' => $condition->id,
         ]);
         $matchedItem2 = Item::factory()->create([
+            'user_id' => $seller->id,
             'name' => '高級メンズ腕時計',
             'condition_id' => $condition->id,
         ]);
         $unmatchedItem = Item::factory()->create([
+            'user_id' => $seller->id,
             'name' => 'レディースバッグ',
             'condition_id' => $condition->id,
         ]);
@@ -53,7 +58,10 @@ class ItemSearchTest extends TestCase
         $user = User::factory()->create();
         $this->actingAs($user);
 
+        $seller = User::factory()->create();
+
         $favItem = Item::factory()->create([
+            'user_id' => $seller->id,
             'condition_id' => $condition->id,
             'name' => 'マイリスト内の腕時計',
         ]);

@@ -3,8 +3,6 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use App\Models\User;
-use App\Models\Item;
 
 class CommentFactory extends Factory
 {
@@ -18,7 +16,7 @@ class CommentFactory extends Factory
         return [
             'user_id' => null,
             'item_id' => null,
-            'content' => $this->faker->realText(30),
+            'content' => trim($this->faker->realText(30)),
         ];
     }
 }

@@ -1,4 +1,9 @@
-# coachtechフリマ(フリマアプリ)
+# coachtechフリマ（模擬案件初級\_フリマアプリ）
+
+## プロジェクト概要
+
+10〜30代の社会人をターゲットとした、独自のフリマアプリです。  
+ユーザーが手軽にアイテムの「出品」と「購入」を行える環境を提供することを目的として開発しました。
 
 ## セットアップ手順
 
@@ -73,29 +78,11 @@ php artisan key:generate
 php artisan migrate
 ```
 
-#### 7.　シーディングの実行
+#### 7. シーディングの実行
 
 ```bash
 php artisan db:seed
 ```
-
-## 開発環境
-
-### アクセスURL
-
-- **お問い合わせ画面** : http://localhost/
-- **ユーザー登録画面** : http://localhost/register
-- **ログイン画面** : http://localhost/login
-- **phpMyAdmin** : http://localhost:8080/
-
-### テスト用ログインアカウント
-
-`php artisan db:seed` 実行後、以下のユーザーでログインして動作確認が可能です。
-ログインすると、すでに出品済み・購入済みのデータが表示された状態で全機能を確認いただけます。
-
-- **メールアドレス**: `test@example.com`
-- **パスワード**: `password`
-- **確認ポイント**:ログイン後、商品購入画面にて登録済みの住所（東京都渋谷区...）が配送先として初期表示されます。また、住所変更機能により別の配送先を指定した場合の挙動もご確認いただけます。
 
 ## 使用技術(実行環境)
 
@@ -106,97 +93,46 @@ php artisan db:seed
 
 ## ER図
 
-## ER図
+![ER図](flea-market-app.drawio.png)
 
-```mermaid
-erDiagram
-    %% --------------------------------------------------
-    %% テーブル同士の繋がり
-    %% --------------------------------------------------
-    users ||--o| profiles : ""
-    users ||--o{ items : ""
-    users ||--o{ addresses : ""
-    users ||--o{ favorites : ""
-    users ||--o{ purchases : ""
-    users ||--o{ comments : ""
-    conditions ||--o{ items : ""
-    categories ||--o{ category_item : ""
-    items ||--o{ category_item : ""
+## 開発環境
 
-    %% --------------------------------------------------
-    %% テーブル定義（文法エラーを完全に修正）
-    %% --------------------------------------------------
-    users {
-        id id PK
-    }
+### アクセスURL
 
-    profiles {
-        id id PK
-        user_id foreign_id "FK, UK"
-        postcode string
-        address string
-        building string_nullable
-        img_url string_nullable
-    }
+- **商品一覧画面（トップ）** : http://localhost/
+- **会員登録画面** : http://localhost/register
+- **ログイン画面** : http://localhost/login
+- **phpMyAdmin** : http://localhost:8080/
+- **MailHog（受信用ダッシュボード）** : http://localhost:8025/
 
-    categories {
-        id id PK
-        name string
-    }
+### テスト用ログインアカウント
 
-    conditions {
-        id id PK
-        name string
-    }
+マイグレーションおよびシーダー（`php artisan db:seed`）の実行後、以下のテスト用アカウントを使用してすぐに各機能の挙動を確認いただけます。
+（効率的な動作確認のため、会員登録の手間を省く目的であらかじめ用意しています）
 
-    items {
-        id id PK
-        user_id foreign_id FK
-        condition_id foreign_id FK
-        name string
-        price integer
-        brand string_nullable
-        description text
-        img_url string
-    }
+#### 1. 一般ユーザー（購入テスト用）
 
-    category_item {
-        id id PK
-        category_id foreign_id FK
-        item_id foreign_id FK
-    }
+会員登録なしでログインし、出品されている商品の閲覧・購入の挙動を確認できます。  
+※プロフィール画像は、要件である「ローカルからのアップロードおよびストレージ（storageディレクトリ）への保存機能」を実際にテストしていただくため、初期状態では未設定（空）としています。
 
-    addresses {
-        id id PK
-        user_id foreign_id FK
-        item_id foreign_id FK
-        postcode string
-        address string
-        building string_nullable
-    }
+- **メールアドレス**: `test@example.com`
+- **パスワード**: `password`
 
-    favorites {
-        id id PK
-        user_id foreign_id FK
-        item_id foreign_id FK
-    }
+#### 2. 出品者ユーザー
 
-    purchases {
-        id id PK
-        user_id foreign_id FK
-        item_id foreign_id "FK, UK"
-        payment_method string
-        shipping_postcode string
-        shipping_address string
-        shipping_building string_nullable
-    }
+要件に基づき生成された「商品情報」「商品カテゴリー情報」を持つ、10件のダミー商品を出品しているアカウントです。
 
-    comments {
-        id id PK
-        user_id foreign_id FK
-        item_id foreign_id FK
-        content text
-    }
-```
+- **メールアドレス**: `seller@example.com`
+- **パスワード**: `password`
 
-![ER図](./diagram.png)
+### メール認証機能（FN012・FN013）の確認手順
+
+用意されているテスト用アカウントはすべて認証済み状態となっています。新規登録時のメール認証や、認証メール再送機能の挙動を確認する際は、以下の手順で行ってください。
+
+1. トップページの「会員登録」から、任意のメールアドレスで新規アカウントを作成する。
+2. 登録完了後、自動的にメール認証待ち画面に遷移する。
+3. ブラウザで [MailHog](http://localhost:8025/) を開く。
+4. 送信された「メールアドレスの確認」というメールを開き、本文内の認証リンクをクリックする。
+5. 認証が完了し、トップページ（またはログイン後の画面）に遷移することを確認する。
+
+_※ `.env` ファイルのメール設定（MAIL_HOST=mailhog, MAIL_PORT=1025 等）は、docker-composeの起動時点で自動的に適用されるようになっています。_

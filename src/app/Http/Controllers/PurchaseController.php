@@ -6,6 +6,8 @@ use App\Models\Item;
 use App\Models\Purchase;
 use App\Http\Requests\PurchaseRequest;
 use App\Http\Requests\AddressRequest;
+use Stripe\Stripe;
+use Stripe\Checkout\Session;
 
 class PurchaseController extends Controller
 {
@@ -30,16 +32,14 @@ class PurchaseController extends Controller
     //商品購入（商品購入処理の実行）
     public function purchaseStore(PurchaseRequest $request, $item_id)
     {
-        // 追加：プルダウン変更時などの送信であれば、選択された値をセッションに保存する
         if ($request->has('payment_method')) {
             session(["selected_payment_{$item_id}" => $request->payment_method]);
         }
-
-        // 購入ボタンが押されていない（プルダウンの自動送信などの）場合、DB保存は絶対にせず、選んだ値を抱えたまま（withInput）画面をリロードする
         if ($request->input('submit_action') !== 'buy') {
             return back()->withInput();
         }
 
+        $item = Item::findOrFail($item_id);
         $user = auth()->user();
         $paymentMethod = $request->payment_method;
 
@@ -58,6 +58,73 @@ class PurchaseController extends Controller
             'shipping_address'  => $address->address,
             'shipping_building' => $address->building,
         ]);
+
+        Stripe::setApiKey(env('STRIPE_SECRET'));
+
+        $paymentTypes = [];
+        if ($paymentMethod === 'カード支払い') {
+            $paymentTypes[] = 'card';
+        } elseif ($paymentMethod === 'コンビニ支払い') {
+            $paymentTypes[] = 'konbini';
+        } else {
+            $paymentTypes = ['card', 'konbini'];
+        }
+
+        $checkoutSession = Session::create([
+            'payment_method_types' => $paymentTypes,
+            'line_items' => [
+                [
+                    'price_data' => [
+                        'currency' => 'jpy',
+                        'product_data' => [
+                            'name' => $item->name,
+                        ],
+                        'unit_amount' => $item->price,
+                    ],
+                    'quantity' => 1,
+                ]
+            ],
+            'mode' => 'payment',
+            'success_url' => route('purchase.success', ['item_id' => $item_id]),
+            'cancel_url' => route('purchase.show', ['item_id' => $item_id]),
+        ]);
+
+        if ($paymentMethod === 'コンビニ支払い') {
+            $checkoutOptions['payment_method_options'] = [
+                'konbini' => [
+                    'expires_after_days' => 3,
+                ]
+            ];
+        }
+
+        return redirect($checkoutSession->url);
+    }
+
+    public function purchaseSuccess($item_id)
+    {
+        Item::findOrFail($item_id);
+        $user = auth()->user();
+
+        $alreadyPurchased = Purchase::where('item_id', $item_id)->exists();
+
+        if (!$alreadyPurchased) {
+            $paymentMethod = session("selected_payment_{$item_id}");
+            if (session()->has("changed_address_{$item_id}")) {
+                $address = (object) session("changed_address_{$item_id}");
+            } else {
+                $user->load('profile');
+                $address = $user->profile ?? null;
+            }
+
+            Purchase::create([
+                'user_id' => $user->id,
+                'item_id' => $item_id,
+                'payment_method' => $paymentMethod,
+                'shipping_postcode' => $address->postcode,
+                'shipping_address' => $address->address,
+                'shipping_building' => $address->building,
+            ]);
+        }
 
         session()->forget("changed_address_{$item_id}");
         session()->forget("selected_payment_{$item_id}");

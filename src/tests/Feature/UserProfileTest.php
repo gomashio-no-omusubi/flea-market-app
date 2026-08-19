@@ -35,9 +35,11 @@ class UserProfileTest extends TestCase
             'img_url' => 'profile/test_avatar.jpg',
         ]);
 
+        $seller = User::factory()->create();
         $condition = Condition::first();
 
         $boughtItem = Item::factory()->create([
+            'user_id' => $seller->id,
             'name' => '購入した商品A',
             'condition_id' => $condition->id,
         ]);
@@ -47,7 +49,7 @@ class UserProfileTest extends TestCase
         $purchase->item_id = $boughtItem->id;
         $purchase->shipping_postcode = '000-0000';
         $purchase->shipping_address = 'お届け先住所';
-        $purchase->payment_method = 'stripe';
+        $purchase->payment_method = 'カード支払い';
         $purchase->save();
 
         Item::factory()->create([

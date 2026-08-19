@@ -11,7 +11,6 @@ class CommentController extends Controller
     {
         $insertData = array_merge($request->validated(), [
             'item_id' => $item_id,
-            //今ログインしているユーザーのIDを使うが、もし万が一ログインしていなかったら（nullだったら）、代わりに「1番のユーザー」として登録
             'user_id' => auth()->id(),
         ]);
 

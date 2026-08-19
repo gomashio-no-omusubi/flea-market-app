@@ -25,8 +25,13 @@ class ItemFavoriteTest extends TestCase
         $user = User::factory()->create();
         $this->actingAs($user);
 
+        $seller = User::factory()->create();
         $condition = Condition::first();
-        $item = Item::factory()->create(['condition_id' => $condition->id]);
+
+        $item = Item::factory()->create([
+            'user_id' => $seller->id,
+            'condition_id' => $condition->id
+        ]);
 
         $this->assertDatabaseMissing('favorites', [
             'user_id' => $user->id,
@@ -46,12 +51,12 @@ class ItemFavoriteTest extends TestCase
         $detailResponse->assertStatus(200);
 
         $detailResponse->assertSeeInOrder([
-            'images/heart_pink.png',
+            'いいね済',
             '1'
         ]);
     }
 
-    //　再度いいねアイコンを押下することによって、いいねを解除することができる。
+    // 再度いいねアイコンを押下することによって、いいねを解除することができる。
     public function test_user_can_unfavorite_item_and_icon_reverts_with_count()
     {
         $this->seed(ConditionSeeder::class);
@@ -59,8 +64,13 @@ class ItemFavoriteTest extends TestCase
         $user = User::factory()->create();
         $this->actingAs($user);
 
+        $seller = User::factory()->create();
         $condition = Condition::first();
-        $item = Item::factory()->create(['condition_id' => $condition->id]);
+
+        $item = Item::factory()->create([
+            'user_id' => $seller->id,
+            'condition_id' => $condition->id
+        ]);
 
         $user->favoriteItems()->attach($item->id);
 
@@ -82,7 +92,7 @@ class ItemFavoriteTest extends TestCase
         $detailResponse->assertStatus(200);
 
         $detailResponse->assertSeeInOrder([
-            'images/heart_default.png',
+            '未いいね',
             '0'
         ]);
     }

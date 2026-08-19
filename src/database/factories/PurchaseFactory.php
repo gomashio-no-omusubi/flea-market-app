@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\Item;
+use App\Models\User;
 
 class PurchaseFactory extends Factory
 {
@@ -15,7 +16,7 @@ class PurchaseFactory extends Factory
     public function definition()
     {
         return [
-            'user_id' => 1,
+            'user_id' => User::factory(),
             'item_id' => Item::factory(),
             'payment_method' => $this->faker->randomElement(['コンビニ支払い', 'カード支払い']),
             'shipping_postcode' => $this->faker->numerify('###-####'),

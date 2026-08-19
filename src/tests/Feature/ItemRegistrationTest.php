@@ -19,7 +19,7 @@ class ItemRegistrationTest extends TestCase
      * 出品商品情報登録
      * ========================================================================= */
 
-    //　商品出品画面にて必要な情報が保存できること（カテゴリ、商品の状態、商品名、ブランド名、商品の説明、販売価格）
+    // 商品出品画面にて必要な情報が保存できること（カテゴリ、商品の状態、商品名、ブランド名、商品の説明、販売価格）
     public function test_user_can_register_item_with_required_information()
     {
         $this->seed(CategorySeeder::class);

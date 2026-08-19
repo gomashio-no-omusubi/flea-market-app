@@ -26,8 +26,13 @@ class ItemCommentTest extends TestCase
         $user = User::factory()->create();
         $this->actingAs($user);
 
+        $seller = User::factory()->create();
         $condition = Condition::first();
-        $item = Item::factory()->create(['condition_id' => $condition->id]);
+
+        $item = Item::factory()->create([
+            'user_id' => $seller->id,
+            'condition_id' => $condition->id
+        ]);
 
         $response = $this->post(route('comments.store', ['item_id' => $item->id]), [
             'content' => 'テストコメントです。'
@@ -44,7 +49,7 @@ class ItemCommentTest extends TestCase
         $redirectResponse = $this->followRedirects($response);
         $redirectResponse->assertSee('テストコメントです。');
         $redirectResponse->assertSeeInOrder([
-            'images/comment_icon.png',
+            'コメント',
             '1'
         ]);
     }
@@ -54,8 +59,13 @@ class ItemCommentTest extends TestCase
     {
         $this->seed(ConditionSeeder::class);
 
+        $seller = User::factory()->create();
         $condition = Condition::first();
-        $item = Item::factory()->create(['condition_id' => $condition->id]);
+
+        $item = Item::factory()->create([
+            'user_id' => $seller->id,
+            'condition_id' => $condition->id
+        ]);
 
         $response = $this->post(route('comments.store', ['item_id' => $item->id]), [
             'content' => 'ログイン前のコメントは送信できない'
@@ -76,8 +86,13 @@ class ItemCommentTest extends TestCase
         $user = User::factory()->create();
         $this->actingAs($user);
 
+        $seller = User::factory()->create();
         $condition = Condition::first();
-        $item = Item::factory()->create(['condition_id' => $condition->id]);
+
+        $item = Item::factory()->create([
+            'user_id' => $seller->id,
+            'condition_id' => $condition->id
+        ]);
 
         $response = $this->from(route('items.show', ['item_id' => $item->id]))->post(route('comments.store', ['item_id' => $item->id]), [
             'content' => ''
@@ -96,8 +111,13 @@ class ItemCommentTest extends TestCase
         $user = User::factory()->create();
         $this->actingAs($user);
 
+        $seller = User::factory()->create();
         $condition = Condition::first();
-        $item = Item::factory()->create(['condition_id' => $condition->id]);
+
+        $item = Item::factory()->create([
+            'user_id' => $seller->id,
+            'condition_id' => $condition->id
+        ]);
 
         $response = $this->from(route('items.show', ['item_id' => $item->id]))->post(route('comments.store', ['item_id' => $item->id]), [
             'content' => str_repeat('A', 256)

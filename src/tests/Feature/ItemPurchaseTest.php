@@ -27,8 +27,13 @@ class ItemPurchaseTest extends TestCase
         $user = User::factory()->create();
         $this->actingAs($user);
 
+        $seller = User::factory()->create();
         $condition = Condition::first();
-        $item = Item::factory()->create(['condition_id' => $condition->id]);
+
+        $item = Item::factory()->create([
+            'user_id' => $seller->id,
+            'condition_id' => $condition->id
+        ]);
 
         Profile::factory()->create([
             'user_id' => $user->id,
@@ -40,11 +45,11 @@ class ItemPurchaseTest extends TestCase
 
         $response = $this->from($purchasePageUrl)->post(route('purchase.store', ['item_id' => $item->id]), [
             'payment_method' => 'カード支払い',
-            'delivery_destination' => 'confirmed',
+            'address' => 'confirmed',
             'submit_action' => 'buy',
         ]);
 
-        $response->assertRedirect(route('items.index'));
+        $response->assertRedirectContains('checkout.stripe.com');
 
         $this->assertDatabaseHas('purchases', [
             'item_id' => $item->id,
@@ -61,8 +66,13 @@ class ItemPurchaseTest extends TestCase
         $user = User::factory()->create();
         $this->actingAs($user);
 
+        $seller = User::factory()->create();
         $condition = Condition::first();
-        $item = Item::factory()->create(['condition_id' => $condition->id]);
+
+        $item = Item::factory()->create([
+            'user_id' => $seller->id,
+            'condition_id' => $condition->id
+        ]);
 
         Purchase::factory()->create([
             'item_id' => $item->id,
@@ -86,8 +96,13 @@ class ItemPurchaseTest extends TestCase
         $user = User::factory()->create();
         $this->actingAs($user);
 
+        $seller = User::factory()->create();
         $condition = Condition::first();
-        $item = Item::factory()->create(['condition_id' => $condition->id]);
+
+        $item = Item::factory()->create([
+            'user_id' => $seller->id,
+            'condition_id' => $condition->id
+        ]);
 
         Purchase::factory()->create([
             'item_id' => $item->id,
@@ -119,8 +134,13 @@ class ItemPurchaseTest extends TestCase
             'address' => '東京都渋谷区',
         ]);
 
+        $seller = User::factory()->create();
         $condition = Condition::first();
-        $item = Item::factory()->create(['condition_id' => $condition->id]);
+
+        $item = Item::factory()->create([
+            'user_id' => $seller->id,
+            'condition_id' => $condition->id
+        ]);
 
         $purchasePageUrl = route('purchase.show', ['item_id' => $item->id]);
 
@@ -150,8 +170,13 @@ class ItemPurchaseTest extends TestCase
 
         Profile::factory()->create(['user_id' => $user->id]);
 
+        $seller = User::factory()->create();
         $condition = Condition::first();
-        $item = Item::factory()->create(['condition_id' => $condition->id]);
+
+        $item = Item::factory()->create([
+            'user_id' => $seller->id,
+            'condition_id' => $condition->id
+        ]);
 
         $addressData = [
             'postcode' => '123-4567',
@@ -177,8 +202,15 @@ class ItemPurchaseTest extends TestCase
         $user = User::factory()->create();
         $this->actingAs($user);
 
+        Profile::factory()->create(['user_id' => $user->id]);
+
+        $seller = User::factory()->create();
         $condition = Condition::first();
-        $item = Item::factory()->create(['condition_id' => $condition->id]);
+
+        $item = Item::factory()->create([
+            'user_id' => $seller->id,
+            'condition_id' => $condition->id,
+        ]);
 
         $addressData = [
             'postcode' => '987-6543',
@@ -188,22 +220,18 @@ class ItemPurchaseTest extends TestCase
 
         $response = $this->post(route('purchase.address.store', ['item_id' => $item->id]), $addressData);
 
-        $response->assertSessionHas("changed_address_{$item->id}", [
-            'postcode' => '987-6543',
-            'address'  => '沖縄県那覇市',
-            'building' => 'コーポテスト202',
-        ]);
+        $response->assertSessionHas("changed_address_{$item->id}", $addressData);
 
         $this->post(route('purchase.store', ['item_id' => $item->id]), [
             'submit_action' => 'buy',
-            'payment_method' => 'stripe',
-            'delivery_destination' => 'confirmed',
+            'payment_method' => 'カード支払い',
+            'address' => 'confirmed',
         ]);
 
         $this->assertDatabaseHas('purchases', [
             'user_id'  => $user->id,
             'item_id'  => $item->id,
-            'payment_method'    => 'stripe',
+            'payment_method'    => 'カード支払い',
             'shipping_postcode' => '987-6543',
             'shipping_address'  => '沖縄県那覇市',
             'shipping_building' => 'コーポテスト202',

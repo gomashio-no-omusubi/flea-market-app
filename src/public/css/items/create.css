@@ -116,6 +116,7 @@
 .sell-form__textarea {
     height: 150px;
     resize: vertical;
+    line-height: 1.2;
 }
 
 .sell-form__input[type="number"]::-webkit-inner-spin-button,

@@ -27,12 +27,14 @@ class ItemDetailTest extends TestCase
         $this->seed(CategorySeeder::class);
         $this->seed(ConditionSeeder::class);
 
-        $condition = Condition::first();
-
         $user = User::factory()->create();
         $this->actingAs($user);
 
+        $seller = User::factory()->create();
+        $condition = Condition::first();
+
         $item = Item::factory()->create([
+            'user_id' => $seller->id,
             'img_url' => 'assets/images/rolex.jpg',
             'name' => '限定メンズ高級腕時計',
             'brand' => 'ロレックス',
@@ -68,12 +70,12 @@ class ItemDetailTest extends TestCase
         $response->assertSee($category2->name);
 
         $response->assertSeeInOrder([
-            'images/heart_pink.png',
+            'いいね済',
             '1'
         ]);
 
         $response->assertSeeInOrder([
-            'images/comment_icon.png',
+            'コメント',
             '1'
         ]);
 

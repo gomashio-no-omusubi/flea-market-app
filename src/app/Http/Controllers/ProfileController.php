@@ -19,20 +19,16 @@ class ProfileController extends Controller
         $page = $request->query('page', 'buy');
         $items = collect();
 
-        // 購入した商品一覧の取得
         if ($page === 'buy') {
             $purchases = Purchase::where('user_id', $user->id)
                 ->with('item')
                 ->latest()
                 ->get();
 
-            // 購入データから紐づく商品（Item）だけを綺麗に抽出
             $items = $purchases->map(function ($purchase) {
                 return $purchase->item;
-            })->filter(); // 万が一の商品データ欠損（null）対策
-        }
-        // 出品した商品一覧（あとで実装するため、今は空のコレクション）
-        elseif ($page === 'sell') {
+            })->filter();
+        } elseif ($page === 'sell') {
             $items = Item::where('user_id', $user->id)
                 ->with('purchase')
                 ->latest()

@@ -57,21 +57,23 @@
                             </div>
 
                             @if($address && $address->postcode && $address->address)
-                                <input type="hidden" name="delivery_destination" value="registered">
+                                <input type="hidden" name="address" value="registered">
                             @else
-                                <input type="hidden" name="delivery_destination" value="">
+                                <input type="hidden" name="address" value="">
                             @endif
                             <p class="error-message">
-                                @error('delivery_destination')
+                                @error('address')
                                     {{ $message }}
                                 @enderror
                             </p>
 
-                            <div class="purchase-address">
-                                <p class="purchase-address__postcode">〒{{ $address?->postcode }}</p>
-                                <p class="purchase-address__address">{{ $address?->address }}</p>
-                                <p class="purchase-address__building">{{ $address?->building }}</p>
-                            </div>
+                            @if(!empty($address?->address))
+                                <div class="purchase-address">
+                                    <p class="purchase-address__postcode">〒{{ $address?->postcode }}</p>
+                                    <p class="purchase-address__address">{{ $address?->address }}</p>
+                                    <p class="purchase-address__building">{{ $address?->building }}</p>
+                                </div>
+                            @endif
                         </div>
                     </div>
 

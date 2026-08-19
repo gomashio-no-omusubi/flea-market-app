@@ -31,9 +31,9 @@
                                 @csrf
                                 <button type="submit" class="icon-btn">
                                     @if($item->is_favorited_by_user)
-                                        <img src="{{ asset('images/heart_pink.png') }}" alt="いいね解除" class="status-icon">
+                                        <img src="{{ asset('images/heart_pink.png') }}" alt="いいね済" class="status-icon">
                                     @else
-                                        <img src="{{ asset('images/heart_default.png') }}" alt="いいね" class="status-icon">
+                                        <img src="{{ asset('images/heart_default.png') }}" alt="未いいね" class="status-icon">
                                     @endif
                                 </button>
                             </form>
@@ -88,7 +88,7 @@
                                     <span class="user-name">{{ $comment->user->name }}</span>
                                 </div>
                                 <div class="comment-body">
-                                    {{ $comment->content }}
+                                    <p>{{ $comment->content }}</p>
                                 </div>
                             </div>
                         @endforeach

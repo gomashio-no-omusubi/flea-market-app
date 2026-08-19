@@ -19,31 +19,26 @@ class ItemController extends Controller
         // マイリスト
         if ($tab === 'mylist') {
             if (auth()->check()) {
-                //いいねした商品だけが表示される
                 $query = Item::whereHas('favorites', function ($q) {
                     $q->where('user_id', auth()->id());
                 });
-                //検索欄が空でない場合
+
                 if (!empty($keyword)) {
                     $query->where('name', 'like', '%' . $keyword . '%');
                 }
 
                 $items = $query->with('purchase')->latest()->get();
             } else {
-                // 未認証の場合は何も表示されない
-                $items = collect(); // 空のコレクションを返す
+                $items = collect();
             }
         }
         //おすすめ
         else {
             if (auth()->check()) {
-                //自分が出品した商品は表示されない
                 $query = Item::where('user_id', '!=', auth()->id());
-                //それ以外（出品していない人の表示）は表示されるのでそれの処理
             } else {
                 $query = Item::query();
             }
-            //検索欄が空でない場合
             if (!empty($keyword)) {
                 $query->where('name', 'like', '%' . $keyword . '%');
             }
@@ -58,9 +53,7 @@ class ItemController extends Controller
     {
         $item = Item::with(['user', 'favorites', 'comments.user', 'categories', 'condition'])->withCount('favorites')->findOrFail($item_id);
 
-        // 💡【ここを追加】ログインしている場合、この商品をいいねしているか判定
         if (auth()->check()) {
-            // 先ほどの toggle と同じ favoriteItems() リレーションを使って判定します
             $item->is_favorited_by_user = auth()->user()->favoriteItems()->where('item_id', $item->id)->exists();
         } else {
             $item->is_favorited_by_user = false;
@@ -81,18 +74,12 @@ class ItemController extends Controller
     //商品出品（商品出品処理の実行）
     public function store(ExhibitionRequest $request)
     {
-        // 2. 画像のアップロード処理
         if ($request->hasFile('img_url')) {
-            // public/items フォルダに画像を保存し、そのパス（items/ファイル名.jpg）を取得
             $path = $request->file('img_url')->store('items', 'public');
 
-            // データベースには 'storage/items/ファイル名.jpg' の形で保存する場合
             $imagePath = 'storage/' . $path;
-
-            // ※もし一覧画面で asset('storage/' . $item->img_url) としているなら
-            // $imagePath = $path; だけで大丈夫です（一覧画面の表示ロジックと合わせてください）
         } else {
-            $imagePath = 'images/dummy.png'; // 画像がない場合の初期値
+            $imagePath = 'images/dummy.png';
         }
 
         $item = Item::create([
@@ -104,7 +91,7 @@ class ItemController extends Controller
             'condition_id' => $request->input('condition_id'),
             'user_id'      => auth()->id(),
         ]);
-        // 4. カテゴリー（多対多）の同期（既存の処理）
+
         $item->categories()->sync($request->categories);
 
         return redirect()->route('mypage.index')->with('success', '商品の出品が完了しました。');

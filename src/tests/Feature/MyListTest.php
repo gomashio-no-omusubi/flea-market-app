@@ -26,13 +26,16 @@ class MyListTest extends TestCase
         $user = User::factory()->create();
         $this->actingAs($user);
 
+        $seller = User::factory()->create();
         $condition = Condition::first();
 
         $favItem = Item::factory()->create([
+            'user_id' => $seller->id,
             'condition_id' => $condition->id,
             'name' => 'いいねした商品',
         ]);
         $otherItem = Item::factory()->create([
+            'user_id' => $seller->id,
             'condition_id' => $condition->id,
             'name' => '通常の商品',
         ]);
@@ -54,15 +57,18 @@ class MyListTest extends TestCase
         $user = User::factory()->create();
         $this->actingAs($user);
 
+        $seller = User::factory()->create();
         $condition = Condition::first();
 
         $availableItem = Item::factory()->create([
+            'user_id' => $seller->id,
             'condition_id' => $condition->id,
             'name' => '販売中の商品',
         ]);
         $user->favoriteItems()->attach($availableItem->id);
 
         $soldItem = Item::factory()->create([
+            'user_id' => $seller->id,
             'condition_id' => $condition->id,
             'name' => '購入済の商品',
         ]);
@@ -85,9 +91,12 @@ class MyListTest extends TestCase
     {
         $this->seed(ConditionSeeder::class);
 
+        $seller = User::factory()->create();
+
         $condition = Condition::first();
 
         $item = Item::factory()->create([
+            'user_id' => $seller->id,
             'name' => '未認証テスト用のダミー商品名',
             'condition_id' => $condition->id,
         ]);

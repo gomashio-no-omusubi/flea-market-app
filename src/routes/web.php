@@ -22,17 +22,18 @@ Route::get('/item/{item_id}', [ItemController::class, 'show'])->name('items.show
 // ==========================================
 Route::middleware(['auth', 'verified'])->group(function () {
 
-    //商品出品
-    Route::get('/sell', [ItemController::class, 'create'])->name('items.create');
-    Route::post('/sell', [ItemController::class, 'store'])->name('items.store');
-
     //商品購入
     Route::get('/purchase/{item_id}', [PurchaseController::class, 'purchaseShow'])->name('purchase.show');
     Route::post('/purchase/{item_id}', [PurchaseController::class, 'purchaseStore'])->name('purchase.store');
+    Route::get('/purchase/success/{item_id}', [PurchaseController::class, 'purchaseSuccess'])->name('purchase.success');
 
     //送付先住所変更
     Route::get('/purchase/address/{item_id}', [PurchaseController::class, 'addressEdit'])->name('purchase.address.edit');
     Route::post('/purchase/address/{item_id}', [PurchaseController::class, 'addressStore'])->name('purchase.address.store');
+
+    //商品出品
+    Route::get('/sell', [ItemController::class, 'create'])->name('items.create');
+    Route::post('/sell', [ItemController::class, 'store'])->name('items.store');
 
     //コメント
     Route::post('/item/{item_id}/comments', [CommentController::class, 'store'])->name('comments.store');

@@ -20,6 +20,7 @@ class UserSeeder extends Seeder
             'name' => 'テスト太郎',
             'email' => 'test@example.com',
             'password' => Hash::make('password'),
+            'email_verified_at' => now(),
         ]);
 
         $me->profile()->create([
@@ -33,6 +34,7 @@ class UserSeeder extends Seeder
             'name'     => '出品者A',
             'email'    => 'seller@example.com',
             'password' => Hash::make('password'),
+            'email_verified_at' => now(),
         ]);
 
         $seller->profile()->create([
