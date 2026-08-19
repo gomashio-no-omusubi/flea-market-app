@@ -11,19 +11,19 @@
 
 任意のディレクトリでリポジトリをクローンし、プロジェクトディレクトリを作成してコンテナを起動します。
 
-#### 1. リポジトリをクローン
+#### 1-1. リポジトリをクローン
 
 ```bash
 git clone git@github.com:gomashio-no-omusubi/flea-market-app.git
 ```
 
-#### 2. 作成したディレクトリに移動
+#### 1-2. 作成したディレクトリに移動
 
 ```bash
 cd flea-market-app
 ```
 
-#### 3. DockerDesktopアプリを立ち上げコンテナのビルドと起動
+#### 1-3. DockerDesktopアプリを立ち上げコンテナのビルドと起動
 
 ```bash
 docker-compose up -d --build
@@ -35,25 +35,25 @@ _※ コンテナが完全に起動するまで、スペックにより数十秒
 
 コンテナ内で以下のコマンドを実行し、アプリをセットアップします。
 
-#### 1. コンテナに入る
+#### 2-1. コンテナに入る
 
 ```bash
 docker-compose exec php bash
 ```
 
-#### 2. 依存パッケージのインストール
+#### 2-2. 依存パッケージのインストール
 
 ```bash
 composer install
 ```
 
-#### 3. 設定ファイルの準備
+#### 2-3. 設定ファイルの準備
 
 ```bash
 cp .env.example .env
 ```
 
-#### 4. .envファイルの修正
+#### 2-4. .envファイルの修正
 
 DB接続設定（11行目付近）が以下になっているか確認・修正してください。
 
@@ -66,19 +66,19 @@ DB_USERNAME=laravel_user
 DB_PASSWORD=laravel_pass
 ```
 
-#### 5. アプリケーションキーの生成
+#### 2-5. アプリケーションキーの生成
 
 ```bash
 php artisan key:generate
 ```
 
-#### 6. マイグレーションの実行
+#### 2-6. マイグレーションの実行
 
 ```bash
 php artisan migrate
 ```
 
-#### 7. シーディングの実行
+#### 2-7. シーディングの実行
 
 ```bash
 php artisan db:seed
