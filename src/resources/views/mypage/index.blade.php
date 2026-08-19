@@ -20,9 +20,8 @@
             <div class="mypage-profile__inner">
                 <div class="profile-image__preview {{ $profile && $profile->img_url ? '' : 'is-empty' }}">
                     @if ($profile && $profile->img_url)
-                        <img id="preview" class="mypage-profile__img" src="{{ asset('storage/' . $profile->img_url) }}" alt="">
-                    @else
-                        <img id="preview" src="" alt="" style="opacity: 0;">
+                        <img id="preview" class="mypage-profile__img" src="{{ asset('storage/' . $profile->img_url) }}"
+                            alt="プロフィール画像">
                     @endif
                 </div>
                 <h1 class="mypage__user-name">{{ $user->name }}</h1>

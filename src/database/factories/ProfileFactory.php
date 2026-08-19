@@ -17,7 +17,7 @@ class ProfileFactory extends Factory
             'postcode' => $this->faker->numerify('###-####'),
             'address' => $this->faker->prefecture() . $this->faker->city() . $this->faker->streetAddress(),
             'building' => $this->faker->secondaryAddress(),
-            'img_url' => 'https://i.pravatar.cc/200?u=' . $this->faker->unique()->safeEmail(),
+            'img_url' => null,
         ];
     }
 }

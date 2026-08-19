@@ -26,16 +26,13 @@
                     <div class="profile-image">
                         <div class="profile-image__preview {{ $profile && $profile->img_url ? '' : 'is-empty' }}">
                             @if ($profile && $profile->img_url)
-                                <img id="preview" src="{{ asset('storage/' . $profile->img_url) }}" alt="">
-                            @else
-                                <img id="preview" src="" alt="" style="display: none;">
+                                <img id="preview" src="{{ asset('storage/' . $profile->img_url) }}" alt="プロフィール画像">
                             @endif
                         </div>
 
                         <div class="profile-image__upload">
                             <label class="profile-image__label" for="image">画像を選択する</label>
-                            <input class="profile-image__input" type="file" name="img_url" id="image" accept="image/*"
-                                onchange="previewImage(this);">
+                            <input class="profile-image__input" type="file" name="img_url" id="image" accept="image/*">
                         </div>
                     </div>
                 </div>

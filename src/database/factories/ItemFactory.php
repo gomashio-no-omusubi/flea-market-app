@@ -27,7 +27,7 @@ class ItemFactory extends Factory
                 null
             ]),
             'description' => $this->faker->realText(50),
-            'img_url' => 'images/dummy.png',
+            'img_url' => 'items/dummy_item.png',
         ];
     }
 }
